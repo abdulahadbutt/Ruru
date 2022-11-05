@@ -7,7 +7,7 @@ void ImageMatrix::averageBlacks() {
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             int idx = width * i + j;
-            if (array[idx] == ZERO) {
+            if (data[idx] == ZERO) {
                 numBlacks[i]++;
             }
         }
@@ -24,7 +24,7 @@ void ImageMatrix::blacknwhite() {
     int whites = 0, blacks = 0;
 
     for (int i = 0; i < width * height; i++) {
-        if (array[i] == ONE) {
+        if (data[i] == ONE) {
             whites++;
         }
         else {
@@ -40,10 +40,10 @@ void ImageMatrix::blacknwhite() {
 
 void ImageMatrix::convertToNegative() {
     for (int i = 0; i < width * height; i++) {
-        switch (array[i])
+        switch (data[i])
         {
-        case '\x00':      array[i] = '\x00FF';  break;
-        case '\x00FF':    array[i] = '\x00';    break;
+        case '\x00':      data[i] = '\x00FF';  break;
+        case '\x00FF':    data[i] = '\x00';    break;
         }
     }
 }
@@ -59,10 +59,10 @@ void ImageMatrix::setPixel(int row, int col, bool on) {
     int i = row + width * col;
     // if i > index length raise error 
     if (on) {
-        array[i] = ONE; 
+        data[i] = ONE; 
     }
     else {
-        array[i] = ZERO; 
+        data[i] = ZERO; 
     }
 }
 
@@ -72,7 +72,7 @@ int ImageMatrix::getPixel(int row, int col) {
     int i = row + width * col;
     // if i > index length raise error 
 
-    if (array[i] == ONE) {
+    if (data[i] == ONE) {
         return 1;
     }
     else {
@@ -88,7 +88,7 @@ void ImageMatrix::save(string filepath) {
 
     out << shape << '\n';
     out << 255 << '\n';
-    out << array;
+    out << data;
     out.close();
 }
 
@@ -96,18 +96,17 @@ void ImageMatrix::read(string filepath) {
     ifstream file(filepath);
     if (file.is_open()) {
         string tp; 
-        for (int i = 0; getline(file, tp); i++) {
-            // cout << tp << endl;
-            // cout << "NEXTLINE" << endl; 
+        for (int i = 0; getline(file, tp); ) {
+            if (tp[0] == '#') continue;
+            cout << i << " " << tp << endl;
             switch (i)
             {
-                case 3: shape = tp;  break;
-                case 5: array = tp;  break;         
+                case 1: shape = tp;  break;
+                case 3: data = tp;  break;         
                 default: break;
             }
-        // cout << "Total Lines: " << i << endl; 
+            i++;
         }
-
     }
 
     string w = shape.substr(0, shape.find(" "));
@@ -117,22 +116,22 @@ void ImageMatrix::read(string filepath) {
     height = stoi(h);
 
     // Encoding the string
-    for (int i = 0; i < array.length(); i++) {
-        if (array[i] == ZERO) {
-            array[i] = '0';
+    for (int i = 0; i < data.length(); i++) {
+        if (data[i] == ZERO) {
+            data[i] = '0';
         }
         else {
-            array[i] = '1';
+            data[i] = '1';
         }
     }
 
-    cout << array << endl;
+    // cout << array << endl;
 }
 
 int ImageMatrix::getAverage() {
     int sum = 0; 
     for (int i = 0; i < width * height; i++) {
-        if (array[i] == ONE) {
+        if (data[i] == ONE) {
             sum += 1;
         }
     }

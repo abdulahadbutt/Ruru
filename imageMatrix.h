@@ -13,7 +13,7 @@ class ImageMatrix {
     public:
         int width, height;
         string shape; 
-        string array;
+        string data;
 
         void read(string filepath);
         void save(string filepath);
