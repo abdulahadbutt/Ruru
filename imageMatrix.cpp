@@ -98,7 +98,7 @@ void ImageMatrix::read(string filepath) {
         string tp; 
         for (int i = 0; getline(file, tp); ) {
             if (tp[0] == '#') continue;
-            cout << i << " " << tp << endl;
+            // cout << i << " " << tp << endl;
             switch (i)
             {
                 case 1: shape = tp;  break;

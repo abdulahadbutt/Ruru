@@ -3,7 +3,7 @@
 int main(void) {
     ImageMatrix img_mat; 
     img_mat.read("pgms/apple-18.pgm");
-    // img_mat.save("pgms/output.pgm");
+    img_mat.save("pgms/output.pgm");
 
     // cout << img_mat.getPixel(25, 25) << endl;
 
