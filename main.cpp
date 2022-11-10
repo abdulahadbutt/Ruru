@@ -5,7 +5,18 @@ int main(void) {
     img_mat.read("pgms/apple-18.pgm");
     img_mat.save("pgms/output.pgm");
 
+    // img_mat.getPixel(125, 125);
+    // cout << img_mat.getPixel(125, 125) << endl;
+    // img_mat.setPixel(125, 125, false);
+    // cout << img_mat.getPixel(125, 125) << endl;
+
+    // cout << endl;
     // cout << img_mat.getPixel(25, 25) << endl;
+    // img_mat.setPixel(25, 25, true);
+    // cout << img_mat.getPixel(25, 25) << endl;
+    // img_mat.convertToNegative();
+    // cout << img_mat.getPixel(25, 25) << endl;
+
 
     // // img_mat.convertToNegative();
     // cout << img_mat.getAverage() << endl;

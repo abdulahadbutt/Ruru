@@ -22,6 +22,7 @@ class ImageMatrix {
         int getSize();
         void convertToNegative();
 
+        void printImage();
 
 
         int getAverage();

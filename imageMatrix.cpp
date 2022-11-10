@@ -42,8 +42,8 @@ void ImageMatrix::convertToNegative() {
     for (int i = 0; i < width * height; i++) {
         switch (data[i])
         {
-        case '\x00':      data[i] = '\x00FF';  break;
-        case '\x00FF':    data[i] = '\x00';    break;
+            case '0': data[i] = '1'; break;
+            case '1': data[i] = '0'; break;
         }
     }
 }
@@ -54,30 +54,52 @@ int ImageMatrix::getSize() {
 }
 
 void ImageMatrix::setPixel(int row, int col, bool on) {
-    // if row > width raise error
+    if (row > height) {
+        cout << "Row value is out of bounds" << endl;
+        return; 
+    }
+
+
+    if (col > width) {
+        cout << "Column value is out of bounds" << endl;
+        return;
+    }
 
     int i = row + width * col;
     // if i > index length raise error 
     if (on) {
-        data[i] = ONE; 
+        data[i] = '1'; 
     }
     else {
-        data[i] = ZERO; 
+        data[i] = '0'; 
     }
 }
 
 int ImageMatrix::getPixel(int row, int col) {
     // if row > width raise error
+    if (row > height) {
+        cout << "Row value is out of bounds" << endl;
+        return -1;
+    }
+
+
+    if (col > width) {
+        cout << "Column value is out of bounds" << endl;
+        return -1;
+    }
+
 
     int i = row + width * col;
     // if i > index length raise error 
 
-    if (data[i] == ONE) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
+    // cout << "DATA INSIDE" << endl;
+    // cout << data[i] << endl; 
+    
+    // cout << data << endl;
+    
+    if (data[i] == '0') {return 0;}
+    else return 1;
+
 }
 
 void ImageMatrix::save(string filepath) {
@@ -91,6 +113,8 @@ void ImageMatrix::save(string filepath) {
     out << data;
     out.close();
 }
+
+
 
 void ImageMatrix::read(string filepath) {
     ifstream file(filepath);
@@ -125,7 +149,20 @@ void ImageMatrix::read(string filepath) {
         }
     }
 
-    // cout << array << endl;
+    // cout << data << endl;
+    // printImage();
+}
+
+
+void ImageMatrix::printImage() {
+    for (int i = 0; i < data.length(); i++) {
+        if ((i + 1) % width == 0) {
+            cout << i;
+            cout << endl;
+        }  
+        
+        // cout << data[i];
+    }
 }
 
 int ImageMatrix::getAverage() {
