@@ -34,6 +34,7 @@ class ImageMatrix {
 
 
         int two2oneD(int row, int col);
+        // int *one2twoD(int i);
     // private:
     //     const int ZERO = '\x00';
     //     const int ONE =  '\x00FF';

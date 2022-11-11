@@ -3,11 +3,20 @@
 int main(void) {
     ImageMatrix img_mat; 
     img_mat.read("pgms/apple-18.pgm");
-    img_mat.convertToNegative();
-    img_mat.save("pgms/output.pgm");
+    // img_mat.convertToNegative();
 
     // img_mat.getPixel(125, 125);
-    // cout << img_mat.getPixel(125, 125) << endl;
+    cout << img_mat.getPixel(125, 125) << endl;
+
+    img_mat.setPixel(125, 125, false);
+    cout << img_mat.getPixel(125, 125) << endl;
+
+    img_mat.setPixel(10000, 1000, true);
+    cout << img_mat.getPixel(1000, 1000);
+
+    img_mat.save("pgms/output.pgm");
+
+
     // img_mat.setPixel(125, 125, false);
     // cout << img_mat.getPixel(125, 125) << endl;
 

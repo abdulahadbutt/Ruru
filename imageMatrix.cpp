@@ -93,7 +93,6 @@ void ImageMatrix::save(string filepath) {
     out << shape << '\n';
     out << 255 << '\n';
     for (int i = 0; i < data.length(); i++) {
-        cout << encode(data[i]) << endl; 
         out << encode(data[i]);
         // cout << encode(data[i]);
     }
@@ -106,13 +105,27 @@ int ImageMatrix::getPixel(int row, int col) {
     
 
     if (i == -1) {
-        return -1;
+        return i;
     }
 
     if (data[i] == '0') {return 0;}
     else return 255;
 }
 
+
+void ImageMatrix::setPixel(int row, int col, bool on) {
+    int i = two2oneD(row, col);
+    if (i == -1) {
+        return;
+    }
+
+    if (on) {
+        data[i] = '1'; 
+    }
+    else {
+        data[i] = '0'; 
+    }
+}
 
 
 void ImageMatrix::averageBlacks() {
@@ -167,27 +180,6 @@ int ImageMatrix::getSize() {
     return width * height;
 }
 
-void ImageMatrix::setPixel(int row, int col, bool on) {
-    if (row > height) {
-        cout << "Row value is out of bounds" << endl;
-        return; 
-    }
-
-
-    if (col > width) {
-        cout << "Column value is out of bounds" << endl;
-        return;
-    }
-
-    int i = row + width * col;
-    // if i > index length raise error 
-    if (on) {
-        data[i] = '1'; 
-    }
-    else {
-        data[i] = '0'; 
-    }
-}
 
 
 
