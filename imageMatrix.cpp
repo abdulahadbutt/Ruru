@@ -152,6 +152,36 @@ void ImageMatrix::convertToNegative() {
 /*********************************************************************************************
  *  Q1 Solutions
  ***********************************************************************************************/
+int ImageMatrix::getAverage() {
+    int sum = 0; 
+    for (int i = 0; i < width * height; i++) {
+        if (data[i] == '1') {
+            sum += 1;
+        }
+    }
+
+    sum = sum * 255; 
+    return sum / (width * height);
+}
+
+
+void ImageMatrix::blacknwhite() {
+    int whites = 0, blacks = 0;
+
+    for (int i = 0; i < width * height; i++) {
+        if (data[i] == '1') {
+            whites++;
+        }
+        else {
+            blacks++;
+        }
+    }
+
+    cout << "Number of white pixels: " << whites << endl;
+    cout << "Number of black pixels: " << blacks << endl;
+    cout << "Total Pixels: " << blacks + whites << endl;
+
+} 
 
 void ImageMatrix::averageBlacks() {
     int numBlacks[height] = {0};
@@ -159,7 +189,7 @@ void ImageMatrix::averageBlacks() {
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             int idx = width * i + j;
-            if (data[idx] == ZERO) {
+            if (data[idx] == '0') {
                 numBlacks[i]++;
             }
         }
@@ -172,32 +202,6 @@ void ImageMatrix::averageBlacks() {
     }
 }
 
-void ImageMatrix::blacknwhite() {
-    int whites = 0, blacks = 0;
 
-    for (int i = 0; i < width * height; i++) {
-        if (data[i] == ONE) {
-            whites++;
-        }
-        else {
-            blacks++;
-        }
-    }
 
-    cout << "Number of white pixels: " << whites << endl;
-    cout << "Number of black pixels: " << blacks << endl;
-    // cout << "Total Pixels: " << blacks + whites << endl;
 
-} 
-
-int ImageMatrix::getAverage() {
-    int sum = 0; 
-    for (int i = 0; i < width * height; i++) {
-        if (data[i] == ONE) {
-            sum += 1;
-        }
-    }
-
-    sum = sum * 255; 
-    return sum / (width * height);
-}
