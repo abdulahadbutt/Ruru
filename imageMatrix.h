@@ -31,6 +31,9 @@ class ImageMatrix {
     private:
         char decode(char);
         char encode(char);
+
+
+        int two2oneD(int row, int col);
     // private:
     //     const int ZERO = '\x00';
     //     const int ONE =  '\x00FF';

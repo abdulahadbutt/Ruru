@@ -13,10 +13,6 @@ char ImageMatrix::decode(char i) {
 }
 
 char ImageMatrix::encode(char i) {
-    // cout << i << endl;
-    // cout << ONE;
-    // cout << typeid(ONE).name() << endl;
-    // cout << ONE; 
     if (i == '1') {
         return ONE;
     }
@@ -27,6 +23,24 @@ char ImageMatrix::encode(char i) {
     return 'E';
 }
 
+
+int ImageMatrix::two2oneD(int row, int col) {
+    // if row > width raise error
+    if (row > height) {
+        cout << "Row value is out of bounds" << endl;
+        return -1;
+    }
+
+
+    if (col > width) {
+        cout << "Column value is out of bounds" << endl;
+        return -1;
+    }
+
+
+    int i = row + width * col;
+    return i; 
+}
 
 // Basic Functionality
 void ImageMatrix::read(string filepath) {
@@ -85,6 +99,21 @@ void ImageMatrix::save(string filepath) {
     }
     out.close();
 }
+
+
+int ImageMatrix::getPixel(int row, int col) {
+    int i = two2oneD(row, col);
+    
+
+    if (i == -1) {
+        return -1;
+    }
+
+    if (data[i] == '0') {return 0;}
+    else return 255;
+}
+
+
 
 void ImageMatrix::averageBlacks() {
     int numBlacks[height] = {0};
@@ -160,32 +189,7 @@ void ImageMatrix::setPixel(int row, int col, bool on) {
     }
 }
 
-int ImageMatrix::getPixel(int row, int col) {
-    // if row > width raise error
-    if (row > height) {
-        cout << "Row value is out of bounds" << endl;
-        return -1;
-    }
 
-
-    if (col > width) {
-        cout << "Column value is out of bounds" << endl;
-        return -1;
-    }
-
-
-    int i = row + width * col;
-    // if i > index length raise error 
-
-    // cout << "DATA INSIDE" << endl;
-    // cout << data[i] << endl; 
-    
-    // cout << data << endl;
-    
-    if (data[i] == '0') {return 0;}
-    else return 1;
-
-}
 
 
 
