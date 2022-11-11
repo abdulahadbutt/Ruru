@@ -1,5 +1,90 @@
 #include "imageMatrix.h"
 
+// Private functions
+char ImageMatrix::decode(char i) {
+    if (i == ONE) {
+        return '1';
+    }
+    if (i == ZERO) {
+        return '0';
+    }
+    cout << "ENCODING ERROR: INPUT ENCODERS ARE DIFFERENT" << endl; 
+    return 'E';
+}
+
+char ImageMatrix::encode(char i) {
+    // cout << i << endl;
+    // cout << ONE;
+    // cout << typeid(ONE).name() << endl;
+    // cout << ONE; 
+    if (i == '1') {
+        return ONE;
+    }
+    if (i == '0') {
+        return ZERO;
+    }
+    cout << "DECODING ERROR: INPUT ENCODERS ARE DIFFERENT" << endl; 
+    return 'E';
+}
+
+
+// Basic Functionality
+void ImageMatrix::read(string filepath) {
+    /* 
+     * Data is saved in a data string and a width and height variable
+     * Params:
+     *  filepath: path to pgm file
+     *  
+     * Returns:
+     *  None
+     */
+    ifstream file(filepath);
+    if (file.is_open()) {
+        string tp; 
+        for (int i = 0; getline(file, tp); ) {
+            if (tp[0] == '#') continue;
+            // cout << i << " " << tp << endl;
+            switch (i)
+            {
+                case 1: shape = tp;  break;
+                case 3: data = tp;  break;         
+                default: break;
+            }
+            i++;
+        }
+    }
+
+    string w = shape.substr(0, shape.find(" "));
+    string h = shape.substr(shape.find(" ") + 1, shape.find('\0'));
+
+    width =  stoi(w);
+    height = stoi(h);
+
+    // Decoding the string
+    for (int i = 0; i < data.length(); i++) {
+        data[i] = decode(data[i]);
+    }
+
+    // cout << data << endl;
+}
+
+
+
+void ImageMatrix::save(string filepath) {
+    ofstream out(filepath);
+    out << "P5" << '\n';
+    // out << "#" << filepath << '\n';
+    // out << "#" << "created PNM file" << '\n';
+
+    out << shape << '\n';
+    out << 255 << '\n';
+    for (int i = 0; i < data.length(); i++) {
+        cout << encode(data[i]) << endl; 
+        out << encode(data[i]);
+        // cout << encode(data[i]);
+    }
+    out.close();
+}
 
 void ImageMatrix::averageBlacks() {
     int numBlacks[height] = {0};
@@ -102,68 +187,14 @@ int ImageMatrix::getPixel(int row, int col) {
 
 }
 
-void ImageMatrix::save(string filepath) {
-    ofstream out(filepath);
-    out << "P5" << '\n';
-    out << "#" << filepath << '\n';
-    out << "#" << "created PNM file" << '\n';
-
-    out << shape << '\n';
-    out << 255 << '\n';
-    out << data;
-    out.close();
-}
 
 
 
-void ImageMatrix::read(string filepath) {
-    ifstream file(filepath);
-    if (file.is_open()) {
-        string tp; 
-        for (int i = 0; getline(file, tp); ) {
-            if (tp[0] == '#') continue;
-            // cout << i << " " << tp << endl;
-            switch (i)
-            {
-                case 1: shape = tp;  break;
-                case 3: data = tp;  break;         
-                default: break;
-            }
-            i++;
-        }
-    }
-
-    string w = shape.substr(0, shape.find(" "));
-    string h = shape.substr(shape.find(" ") + 1, shape.find('\0'));
-
-    width =  stoi(w);
-    height = stoi(h);
-
-    // Encoding the string
-    for (int i = 0; i < data.length(); i++) {
-        if (data[i] == ZERO) {
-            data[i] = '0';
-        }
-        else {
-            data[i] = '1';
-        }
-    }
-
-    // cout << data << endl;
-    // printImage();
-}
 
 
-void ImageMatrix::printImage() {
-    for (int i = 0; i < data.length(); i++) {
-        if ((i + 1) % width == 0) {
-            cout << i;
-            cout << endl;
-        }  
-        
-        // cout << data[i];
-    }
-}
+
+
+
 
 int ImageMatrix::getAverage() {
     int sum = 0; 

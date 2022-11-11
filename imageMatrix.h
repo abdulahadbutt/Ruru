@@ -13,7 +13,7 @@ class ImageMatrix {
     public:
         int width, height;
         string shape; 
-        string data;
+        string data; // '0' represents 0 and '1' represents 255
 
         void read(string filepath);
         void save(string filepath);
@@ -22,12 +22,15 @@ class ImageMatrix {
         int getSize();
         void convertToNegative();
 
-        void printImage();
 
 
         int getAverage();
         void blacknwhite();
         void averageBlacks();
+
+    private:
+        char decode(char);
+        char encode(char);
     // private:
     //     const int ZERO = '\x00';
     //     const int ONE =  '\x00FF';
