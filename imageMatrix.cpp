@@ -1,6 +1,8 @@
 #include "imageMatrix.h"
 
-// Private functions
+/*********************************************************************************************
+ *  Private Functions
+ ***********************************************************************************************/
 char ImageMatrix::decode(char i) {
     if (i == ONE) {
         return '1';
@@ -42,7 +44,10 @@ int ImageMatrix::two2oneD(int row, int col) {
     return i; 
 }
 
-// Basic Functionality
+
+/*********************************************************************************************
+ *  Basic Functionality
+ ***********************************************************************************************/
 void ImageMatrix::read(string filepath) {
     /* 
      * Data is saved in a data string and a width and height variable
@@ -128,6 +133,26 @@ void ImageMatrix::setPixel(int row, int col, bool on) {
 }
 
 
+int ImageMatrix::getSize() {
+    return width * height;
+}
+
+
+void ImageMatrix::convertToNegative() {
+    for (int i = 0; i < width * height; i++) {
+        switch (data[i])
+        {
+            case '0': data[i] = '1'; break;
+            case '1': data[i] = '0'; break;
+        }
+    }
+}
+
+
+/*********************************************************************************************
+ *  Q1 Solutions
+ ***********************************************************************************************/
+
 void ImageMatrix::averageBlacks() {
     int numBlacks[height] = {0};
 
@@ -164,33 +189,6 @@ void ImageMatrix::blacknwhite() {
     // cout << "Total Pixels: " << blacks + whites << endl;
 
 } 
-
-void ImageMatrix::convertToNegative() {
-    for (int i = 0; i < width * height; i++) {
-        switch (data[i])
-        {
-            case '0': data[i] = '1'; break;
-            case '1': data[i] = '0'; break;
-        }
-    }
-}
-
-
-int ImageMatrix::getSize() {
-    return width * height;
-}
-
-
-
-
-
-
-
-
-
-
-
-
 
 int ImageMatrix::getAverage() {
     int sum = 0; 
