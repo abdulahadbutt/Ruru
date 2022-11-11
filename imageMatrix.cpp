@@ -40,7 +40,7 @@ int ImageMatrix::two2oneD(int row, int col) {
     }
 
 
-    int i = row + width * col;
+    int i = row * width + col;
     return i; 
 }
 
@@ -204,4 +204,32 @@ void ImageMatrix::averageBlacks() {
 
 
 
+/*********************************************************************************************
+ *  Q2 Solutions
+ ***********************************************************************************************/
+// void ImageMatrix::connCompQ(int row, int col) {
+//     int i = two2oneD(row, col);
+//     if (i == -1) return;
 
+//     q.push(i);
+//     string output_s(data.length(), '1');
+
+//     while(!q.empty()) {
+//         int curr = q.front();
+//         output_s[curr] = '0';
+//         q.pop();
+
+//         int *n = getNeighbours(curr);
+//     }
+
+// }
+
+
+// int *getNeighbours(int i){
+
+// }
+
+
+// int *one2twoD(int i) {
+
+// }
