@@ -44,7 +44,26 @@ int ImageMatrix::two2oneD(int row, int col) {
     return i; 
 }
 
+int *ImageMatrix::one2twoD(int i) {
+    // cout << "INPUT: " << i << endl;
+    int y = i / width;
+    int x = i % width;
 
+    // cout << i << ":" << y << " " << x << endl;
+    int *coords = new int[2];
+    coords[0] = y;
+    coords[1] = x;
+    // {y, x};
+    return coords;
+}
+
+
+string getTime() {
+    auto end = std::chrono::system_clock::now();
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+    return ctime(&end_time);
+}
 /*********************************************************************************************
  *  Basic Functionality
  ***********************************************************************************************/
@@ -207,29 +226,99 @@ void ImageMatrix::averageBlacks() {
 /*********************************************************************************************
  *  Q2 Solutions
  ***********************************************************************************************/
-// void ImageMatrix::connCompQ(int row, int col) {
-//     int i = two2oneD(row, col);
-//     if (i == -1) return;
+void ImageMatrix::connCompQ(int row, int col) {
+    int i = two2oneD(row, col);
+    if (i == -1) return;
 
-//     q.push(i);
-//     string output_s(data.length(), '1');
+    cout << "[PUSHING]: " << i << endl;
+    q.push(i);
+    string output_s(data.length(), '1');
 
-//     while(!q.empty()) {
-//         int curr = q.front();
-//         output_s[curr] = '0';
-//         q.pop();
+    // while(!q.empty()) {
+    //     cout << q.front() << endl;
+    //     q.pop();
+    // }
+    int t;
+    while(!q.empty()) {
+        int curr = q.front();
+        cout << "CURR: (" << one2twoD(curr)[0] << " " << one2twoD(curr)[1] << ")" << endl; 
+        output_s[curr] = '0';
 
-//         int *n = getNeighbours(curr);
-//     }
+        // cout << "[POPPING]: " << curr << endl;
+        q.pop();
+        cout << "DATA: " << output_s << endl; 
+        
+        cin >> t;
+        int *n = getNeighbours(curr);
+        cout << "Neighbours: ";
+        for (int i = 0; i < 8; i++) {
+            cout << n[i] << ' ';
+        }
+        cin >> t;
+        for (int i = 0; i < 8; i++) {
+            if (n[i] == -1) {
+                continue;
+            }
+            if (output_s[n[i]] == '1'){
+                output_s[n[i]] == '0';
+                q.push(n[i]);
+            }
+        }
 
-// }
+        delete[] n;
+    }
+
+}
 
 
-// int *getNeighbours(int i){
+int *ImageMatrix::getNeighbours(int i){
 
-// }
+    // cout << "COORDS: " << endl;
+    int *coords = one2twoD(i);
+    int row = coords[0];
+    int col = coords[1];
+    
+
+    int *neighbours = new int[8];
+    for (int i = 0; i < 8; i++) {
+        neighbours[i] = -1;
+    }
 
 
-// int *one2twoD(int i) {
+    int idx = 0;
+    for (int j = -1; j < 2; j++) {
+        for (int i = -1; i < 2; i++) {
+            if (i == 0 && j == 0) {
+                continue;
+            }
 
-// }
+
+            int row_c = row + j;
+            int col_c = col + i;
+
+            // cout << "i: " << i << endl;
+            // cout << "j: " << j << endl;
+            // cout << "row: " << row_c << endl; 
+            // cout << "col: " << col_c << endl; 
+            // cout << endl;
+            if (row_c > height || col_c > width || row_c < 0 || col_c < 0) {
+                continue;
+                idx++;
+            }
+
+            neighbours[idx] = two2oneD(row_c, col_c);
+            idx++;
+            // cout << row_c << " " << col_c << endl;
+
+        }
+    }
+    // cout << "NEIGHBOURS" << endl;
+    // for (int i = 0; i < 8; i++) {
+    //     int *cs = one2twoD(neighbours[i]);
+    //     cout << "index: " << neighbours[i] << endl;
+    //     cout << "(" << cs[0] << ',' << cs[1] << ")" << endl << endl;
+    // }
+    return neighbours;
+}
+
+

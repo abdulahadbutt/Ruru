@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 #include <fstream> 
+#include <queue>
+#include <chrono>
+#include <ctime>  
 
 #define ZERO '\x00'
 #define ONE  '\x00FF'
@@ -8,13 +11,16 @@
 
 using namespace std;
 
+string getTime();
 
 class ImageMatrix {
     public:
         int width, height;
         string shape; 
         string data; // '0' represents 0 and '1' represents 255
+        queue <int> q; 
 
+        // Basic functionality
         void read(string filepath);
         void save(string filepath);
         int getPixel(int row, int col);
@@ -23,10 +29,14 @@ class ImageMatrix {
         void convertToNegative();
 
 
-
+        // Q1
         int getAverage();
         void blacknwhite();
         void averageBlacks();
+
+
+        // Q2
+        void connCompQ(int row, int col);
 
     private:
         char decode(char);
@@ -34,7 +44,8 @@ class ImageMatrix {
 
 
         int two2oneD(int row, int col);
-        // int *one2twoD(int i);
+        int *one2twoD(int i);
+        int *getNeighbours(int i);
     // private:
     //     const int ZERO = '\x00';
     //     const int ONE =  '\x00FF';
