@@ -10,6 +10,7 @@ int main(void) {
     img_mat.read("pgms/apple-18.pgm");
     img_mat.save("pgms/output.pgm");
     img_mat.connCompQ(128, 128);
+    cout << "What now" << endl;
     // cout << img_mat.getAverage() << endl;
     // // img_mat.convertToNegative();
     // img_mat.blacknwhite();

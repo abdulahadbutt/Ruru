@@ -223,7 +223,7 @@ void ImageMatrix::averageBlacks() {
 
 
 
-/*********************************************************************************************
+/***********************************************************************************************
  *  Q2 Solutions
  ***********************************************************************************************/
 void ImageMatrix::connCompQ(int row, int col) {
@@ -233,41 +233,38 @@ void ImageMatrix::connCompQ(int row, int col) {
     cout << "[PUSHING]: " << i << endl;
     q.push(i);
     string output_s(data.length(), '1');
-
-    // while(!q.empty()) {
-    //     cout << q.front() << endl;
-    //     q.pop();
-    // }
     int t;
     while(!q.empty()) {
         int curr = q.front();
-        cout << "CURR: (" << one2twoD(curr)[0] << " " << one2twoD(curr)[1] << ")" << endl; 
+        q.pop();
+
         output_s[curr] = '0';
 
-        // cout << "[POPPING]: " << curr << endl;
-        q.pop();
-        cout << "DATA: " << output_s << endl; 
-        
-        cin >> t;
-        int *n = getNeighbours(curr);
-        cout << "Neighbours: ";
+        int *neighbours = getNeighbours(curr);
         for (int i = 0; i < 8; i++) {
-            cout << n[i] << ' ';
-        }
-        cin >> t;
-        for (int i = 0; i < 8; i++) {
-            if (n[i] == -1) {
-                continue;
-            }
-            if (output_s[n[i]] == '1'){
-                output_s[n[i]] == '0';
-                q.push(n[i]);
-            }
-        }
+            if (neighbours[i] == -1) continue;
 
-        delete[] n;
+            if (output_s[neighbours[i]] == '0') continue;
+
+            // cout << neighbours[i] << endl; 
+            // cout << "[PUSHING]: " << neighbours[i] << endl;
+
+            q.push(neighbours[i]);
+            output_s[neighbours[i]] = '0';
+            cout << neighbours[i] << ',' << endl;
+        }
+        delete[] neighbours;
+
     }
 
+    cout << "HERE" << endl;
+    cout << "HERE HERE" << endl;
+
+
+
+
+    cout << "Finished";
+    return;
 }
 
 
@@ -277,6 +274,8 @@ int *ImageMatrix::getNeighbours(int i){
     int *coords = one2twoD(i);
     int row = coords[0];
     int col = coords[1];
+
+    delete[] coords;
     
 
     int *neighbours = new int[8];
@@ -315,7 +314,7 @@ int *ImageMatrix::getNeighbours(int i){
     // cout << "NEIGHBOURS" << endl;
     // for (int i = 0; i < 8; i++) {
     //     int *cs = one2twoD(neighbours[i]);
-    //     cout << "index: " << neighbours[i] << endl;
+    //     // cout << "index: " << neighbours[i] << endl;
     //     cout << "(" << cs[0] << ',' << cs[1] << ")" << endl << endl;
     // }
     return neighbours;
