@@ -44,8 +44,8 @@ class ImageMatrix {
 
 
         int two2oneD(int row, int col);
-        int *one2twoD(int i);
-        int *getNeighbours(int i);
+        void one2twoD(int i, int *coords);
+        void getNeighbours(int i, int *n);
     // private:
     //     const int ZERO = '\x00';
     //     const int ONE =  '\x00FF';

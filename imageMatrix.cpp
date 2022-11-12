@@ -44,17 +44,13 @@ int ImageMatrix::two2oneD(int row, int col) {
     return i; 
 }
 
-int *ImageMatrix::one2twoD(int i) {
+void ImageMatrix::one2twoD(int i, int *coords) {
     // cout << "INPUT: " << i << endl;
     int y = i / width;
     int x = i % width;
 
-    // cout << i << ":" << y << " " << x << endl;
-    int *coords = new int[2];
     coords[0] = y;
     coords[1] = x;
-    // {y, x};
-    return coords;
 }
 
 
@@ -240,7 +236,8 @@ void ImageMatrix::connCompQ(int row, int col) {
 
         output_s[curr] = '0';
 
-        int *neighbours = getNeighbours(curr);
+        int neighbours[8];
+        getNeighbours(curr, neighbours);
         for (int i = 0; i < 8; i++) {
             if (neighbours[i] == -1) continue;
 
@@ -253,34 +250,27 @@ void ImageMatrix::connCompQ(int row, int col) {
             output_s[neighbours[i]] = '0';
             cout << neighbours[i] << ',' << endl;
         }
-        delete[] neighbours;
-
+        cout << "HERE" << endl;
     }
-
-    cout << "HERE" << endl;
     cout << "HERE HERE" << endl;
-
-
-
 
     cout << "Finished";
     return;
 }
 
 
-int *ImageMatrix::getNeighbours(int i){
+void ImageMatrix::getNeighbours(int i, int *n_array){
 
     // cout << "COORDS: " << endl;
-    int *coords = one2twoD(i);
+    int coords[2];
+    one2twoD(i, coords);
     int row = coords[0];
     int col = coords[1];
 
-    delete[] coords;
     
 
-    int *neighbours = new int[8];
     for (int i = 0; i < 8; i++) {
-        neighbours[i] = -1;
+        n_array[i] = -1;
     }
 
 
@@ -305,7 +295,7 @@ int *ImageMatrix::getNeighbours(int i){
                 idx++;
             }
 
-            neighbours[idx] = two2oneD(row_c, col_c);
+            n_array[idx] = two2oneD(row_c, col_c);
             idx++;
             // cout << row_c << " " << col_c << endl;
 
@@ -317,7 +307,6 @@ int *ImageMatrix::getNeighbours(int i){
     //     // cout << "index: " << neighbours[i] << endl;
     //     cout << "(" << cs[0] << ',' << cs[1] << ")" << endl << endl;
     // }
-    return neighbours;
 }
 
 
